@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Tambahkan repository PufferPanel dan instal PufferPanel
-RUN curl -s https://packagecloud.io/install/repositories/pufferpanel/pufferpanel/script.deb.sh | bash && \
+RUN curl -s https://packagecloud.io/install/repositories/pufferpanel/pufferpanel/script.deb.sh?any=true | sudo bash
     apt-get update && \
     apt-get install -y pufferpanel
 
@@ -23,8 +23,8 @@ RUN pufferpanel user add --admin --username admin --password adminpassword
 # Buka port yang digunakan oleh PufferPanel
 EXPOSE 8080
 
-# Jalankan PufferPanel
-CMD ["pufferpanel", "start"]
-
 # Bersihkan
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Jalankan PufferPanel
+CMD ["pufferpanel", "start"]
