@@ -1,7 +1,7 @@
-# Jangan Di ubah
+# Gunakan Ubuntu 20.04 sebagai image dasar
 FROM ubuntu:20.04
 
-# Gunakan mode non interactive 
+# Setel variabel lingkungan untuk mode non-interaktif
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Perbarui daftar paket dan instal dependensi
@@ -17,15 +17,14 @@ RUN curl -s https://packagecloud.io/install/repositories/pufferpanel/pufferpanel
     apt-get update && \
     apt-get install -y pufferpanel
 
-# Tambahkan pengguna baru untuk PufferPanel dan aktifkan layanan
-RUN pufferpanel user add --admin --username admin --password adminpassword && \
-    systemctl enable --now pufferpanel
+# Tambahkan pengguna baru untuk PufferPanel
+RUN pufferpanel user add --admin --username admin --password adminpassword
 
 # Buka port yang digunakan oleh PufferPanel
 EXPOSE 8080
 
 # Jalankan PufferPanel
-CMD ["pufferpanel"]
+CMD ["pufferpanel", "start"]
 
 # Bersihkan
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
