@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 
 # Tambahkan repository PufferPanel dan instal PufferPanel
 RUN curl -s https://packagecloud.io/install/repositories/pufferpanel/pufferpanel/script.deb.sh | bash && \ | sudo bash
-    apt update
+    apt-get update
     apt-get install pufferpanel
 
 # Tambahkan pengguna baru untuk PufferPanel
