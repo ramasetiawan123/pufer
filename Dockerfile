@@ -1,10 +1,10 @@
-# Use an official Ubuntu as the base image
+# Jangan Di ubah
 FROM ubuntu:20.04
 
-# Set environment variables to non-interactive mode
+# Gunakan mode non interactive 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Update the package list and install dependencies
+# Perbarui daftar paket dan instal dependensi
 RUN apt-get update && apt-get install -y \
     sudo \
     curl \
@@ -12,20 +12,20 @@ RUN apt-get update && apt-get install -y \
     software-properties-common \
     && rm -rf /var/lib/apt/lists/*
 
-# Add PufferPanel repository and install PufferPanel
-RUN curl -s https://packagecloud.io/install/repositories/pufferpanel/pufferpanel/script.deb.sh | sudo bash && \
-    sudo apt-get update && \
-    sudo apt-get install -y pufferpanel
+# Tambahkan repository PufferPanel dan instal PufferPanel
+RUN curl -s https://packagecloud.io/install/repositories/pufferpanel/pufferpanel/script.deb.sh | bash && \
+    apt-get update && \
+    apt-get install -y pufferpanel
 
-# Create a new user for PufferPanel and enable the service
-RUN sudo pufferpanel user add --admin --username admin --password adminpassword && \
-    sudo systemctl enable --now pufferpanel
+# Tambahkan pengguna baru untuk PufferPanel dan aktifkan layanan
+RUN pufferpanel user add --admin --username admin --password adminpassword && \
+    systemctl enable --now pufferpanel
 
-# Expose the port PufferPanel uses
+# Buka port yang digunakan oleh PufferPanel
 EXPOSE 8080
 
-# Start PufferPanel
+# Jalankan PufferPanel
 CMD ["pufferpanel"]
 
-# Clean up
+# Bersihkan
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
